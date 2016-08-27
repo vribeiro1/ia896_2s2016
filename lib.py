@@ -1,29 +1,52 @@
 from PIL import Image
 
 
-def gray_pixels(img_path):
+def gray_pixels(img_path, resize=None):
     image = Image.open(img_path).convert('L')
+    if resize is not None:
+        image = image.resize(resize, Image.LANCZOS)
+
     pixels = list(image.getdata())
 
     return pixels
 
 
-def r_pixels(img_path):
+def rgb_pixels(img_path, resize=None):
     image = Image.open(img_path)
+
+    if resize is not None:
+        image = image.resize(resize, Image.LANCZOS)
+
+    pixels = list(image.getdata())
+
+    return pixels
+
+
+def r_pixels(img_path, resize=None):
+    image = Image.open(img_path)
+    if resize is not None:
+        image = image.resize(resize, Image.LANCZOS)
+
     pixels = list(image.getdata())
 
     return [int(pixel[0]) for pixel in pixels]
 
 
-def g_pixels(img_path):
+def g_pixels(img_path, resize=None):
     image = Image.open(img_path)
+    if resize is not None:
+        image = image.resize(resize, Image.LANCZOS)
+
     pixels = list(image.getdata())
 
     return [int(pixel[1]) for pixel in pixels]
 
 
-def b_pixels(img_path):
+def b_pixels(img_path, resize=None):
     image = Image.open(img_path)
+    if resize is not None:
+        image = image.resize(resize)
+
     pixels = list(image.getdata())
 
     return [int(pixel[2]) for pixel in pixels]
@@ -32,14 +55,3 @@ def b_pixels(img_path):
 def bench_k_means(estimator, data):
     estimator.fit(data)
     return estimator
-
-if __name__ == "__main__":
-    import os
-
-    coil_dir = os.path.join(os.path.dirname(__file__), "data", "coil-100")
-    image_dir = os.path.join(coil_dir, "obj1__0.png")
-
-    print(gray_pixels(image_dir))
-    print(r_pixels(image_dir))
-    print(g_pixels(image_dir))
-    print(b_pixels(image_dir))
