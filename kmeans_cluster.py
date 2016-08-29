@@ -25,7 +25,12 @@ def rgb_kmeans(pixels):
 
 
 def norm_histogram(image, bins, norm=None):
-    hist, bin_edges = np.histogram(image, bins=bins)
+    bins_ = []
+    bins_.append(sorted([bin[0] for bin in bins]))
+    bins_.append(sorted([bin[1] for bin in bins]))
+    bins_.append(sorted([bin[2] for bin in bins]))
+
+    hist, bin_edges = np.histogramdd(image, bins=bins_)
 
     if norm is not None:
         hist = np.linalg.norm(hist, ord=norm)
@@ -37,11 +42,11 @@ def query_image(img_name, code_words, centroids):
     choices = []
 
     img_path = os.path.join(coil_dir, img_name)
-    image = lib.rgb_pixels(img_path, resize=(32, 32))
+    image = np.array(lib.rgb_pixels(img_path, resize=(32, 32)))
 
     hist = norm_histogram(image, centroids, norm=NORM)
 
-    for img_name, img_hist in code_words:
+    for img_name, img_hist in code_words.items():
         choices.append((img_name, euclidean(hist, img_hist)))
 
     choices.sort(key=lambda tup: tup[1])
@@ -56,7 +61,7 @@ def sample_pixels(images):
         img_pixels = lib.rgb_pixels(image, resize=(32, 32))
         sampled_pixels += img_pixels
 
-    return sampled_pixels
+    return np.array(sampled_pixels)
 
 
 if __name__ == "__main__":
@@ -70,7 +75,8 @@ if __name__ == "__main__":
 
     print("Creating code words dictionary...")
     code_words = {
-        image_name: norm_histogram(lib.rgb_pixels(image_path, resize=(32, 32)),
+        image_name: norm_histogram(np.array(lib.rgb_pixels(image_path,
+                                                           resize=(32, 32))),
                                    rgb_kmeans.cluster_centers_,
                                    norm=NORM)
         for image_name, image_path in training_images.items()

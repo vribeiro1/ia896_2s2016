@@ -1,3 +1,5 @@
+import numpy as np
+
 from PIL import Image
 
 
@@ -19,7 +21,7 @@ def rgb_pixels(img_path, resize=None):
 
     pixels = list(image.getdata())
 
-    return pixels
+    return [np.array(pixel) for pixel in pixels]
 
 
 def r_pixels(img_path, resize=None):
