@@ -1,3 +1,5 @@
+import random
+
 import numpy as np
 
 from PIL import Image
@@ -57,3 +59,16 @@ def b_pixels(img_path, resize=None):
 def bench_k_means(estimator, data):
     estimator.fit(data)
     return estimator
+
+
+def n_random(n, list_):
+    """ Return n randomly selected elements from a list """
+    rand_list = []
+    l = list(list_)
+
+    while len(rand_list) != n:
+        rand_elem = random.choice(l)
+        rand_list.append(rand_elem)
+        l.pop(l.index(rand_elem))
+
+    return rand_list
