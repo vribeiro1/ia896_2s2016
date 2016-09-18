@@ -6,6 +6,8 @@ from PIL import Image
 
 
 def gray_pixels(img_path, resize=None):
+    """ Return the grayscale pixels of an image """
+
     image = Image.open(img_path).convert('L')
     if resize is not None:
         image = image.resize(resize, Image.LANCZOS)
@@ -16,6 +18,8 @@ def gray_pixels(img_path, resize=None):
 
 
 def rgb_pixels(img_path, resize=None):
+    """ Return the rgb pixels of an image """
+
     image = Image.open(img_path)
 
     if resize is not None:
@@ -27,6 +31,8 @@ def rgb_pixels(img_path, resize=None):
 
 
 def r_pixels(img_path, resize=None):
+    """ Return the red pixels of an image """
+
     image = Image.open(img_path)
     if resize is not None:
         image = image.resize(resize, Image.LANCZOS)
@@ -37,6 +43,8 @@ def r_pixels(img_path, resize=None):
 
 
 def g_pixels(img_path, resize=None):
+    """ Return the green pixels of an image """
+
     image = Image.open(img_path)
     if resize is not None:
         image = image.resize(resize, Image.LANCZOS)
@@ -47,6 +55,8 @@ def g_pixels(img_path, resize=None):
 
 
 def b_pixels(img_path, resize=None):
+    """ Return the blue pixels of an image """
+
     image = Image.open(img_path)
     if resize is not None:
         image = image.resize(resize)
@@ -57,6 +67,8 @@ def b_pixels(img_path, resize=None):
 
 
 def bench_k_means(estimator, data):
+    """ Fit the data into a given estimator """
+
     estimator.fit(data)
     return estimator
 
