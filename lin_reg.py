@@ -9,7 +9,7 @@ PI = np.pi
 RANGE = np.arange(0, 2*PI, 0.1)
 
 N = 60
-M = 40
+M = 15
 y = np.sin
 
 
@@ -50,6 +50,8 @@ def main():
     plt.plot(RANGE, [y(x) for x in RANGE], 'r')
     plt.plot(x_data, y_data, 'bo')
     plt.plot(x_opt, y_opt, 'g')
+    plt.suptitle("nº of points = {} model complexity = {}".format(N, M),
+                 fontsize=13)
     plt.show()
 
 if __name__ == '__main__':
